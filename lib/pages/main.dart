@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:linkedln_ornek/home_screen.dart';
-import 'package:linkedln_ornek/post_screen.dart';
+import 'package:linkedln_ornek/pages/home_screen.dart';
+import 'package:linkedln_ornek/pages/post_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:linkedln_ornek/pages/welcome_page.dart';
 
 
 void main() {
@@ -13,9 +15,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return  const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:HomeScreen(),
+      home:WelcomePage(),
     );
   }
 }

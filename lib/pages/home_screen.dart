@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:linkedln_ornek/pages/Home%20Pages/Post_screen_1.dart';
+import 'package:linkedln_ornek/pages/Home%20Pages/network_page.dart';
 import 'post_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _State();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _State extends State<HomeScreen> with TickerProviderStateMixin {
-  TabController? con;
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
 
   @override
   void initState() {
-    con = TabController(vsync: this, length: 5);
+    _tabController = TabController(length: 5, vsync: this);
     super.initState();
   }
 
@@ -26,9 +29,9 @@ class _State extends State<HomeScreen> with TickerProviderStateMixin {
         title: Row(
           children: [
             CircleAvatar(
-              radius: 20,
-              backgroundImage: NetworkImage(
-                  'https://via.placeholder.com/150'), // Kullanıcı fotoğrafı.
+              child:
+              Image.asset("images/profil.jpeg"),
+              radius: 20, // Kullanıcı fotoğrafı
               backgroundColor: Colors.grey.shade300,
             ),
             const SizedBox(width: 10),
@@ -47,6 +50,12 @@ class _State extends State<HomeScreen> with TickerProviderStateMixin {
                 ),
               ),
             ),
+            IconButton(
+              icon: const Icon(Icons.message),
+              onPressed: () {
+                // Mesaj Kutusu İşlemi
+              },
+            ),
           ],
         ),
       ),
@@ -59,7 +68,7 @@ class _State extends State<HomeScreen> with TickerProviderStateMixin {
           ),
         ),
         child: TabBar(
-          controller: con,
+          controller: _tabController,
           indicatorColor: Colors.black,
           labelColor: Colors.black,
           tabs: const [
@@ -68,20 +77,17 @@ class _State extends State<HomeScreen> with TickerProviderStateMixin {
             Tab(icon: Icon(Icons.post_add), text: 'Gönder'),
             Tab(icon: Icon(Icons.notifications), text: 'Bildirimler'),
             Tab(icon: Icon(Icons.settings), text: 'İş İlanları'),
-
           ],
         ),
       ),
       body: TabBarView(
-        controller: con,
-        physics: const NeverScrollableScrollPhysics(), // Kullanıcının yatay kaydırmasını engeller
-        children: <Widget>[
-          PostScreen(),                     // Ana Sayfa (1. sekme) PostScreen içeriğini gösterir.
-          Center(child: Text('Ağım')),
-          Center(child: Text('Gönder')),
+        controller: _tabController,
+        children: const [
+          PostScreen(), // Kaydırma bu ekranda sağlanır.
+          NetworkPage(),
+          PostScreen1(),
           Center(child: Text('Bildirimler')),
           Center(child: Text('İş İlanları')),
-
         ],
       ),
     );
